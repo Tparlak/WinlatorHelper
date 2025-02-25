@@ -1,32 +1,85 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Çalışmam</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            margin: 20px 0;
-            color: #333;
-        }
-        iframe {
-            width: 90%;
-            height: 600px;
-            border: none;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sheets Sekmeli Görünüm</title>
+  <style>
+    /* Sekme butonları stili */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .tab {
+      padding: 10px 20px;
+      background: #ddd;
+      margin: 0 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .tab.active {
+      background: #bbb;
+    }
+    /* İframe kapsayıcıları */
+    .iframe-container {
+      display: none;
+    }
+    .iframe-container.active {
+      display: block;
+    }
+    iframe {
+      width: 90%;
+      height: 600px;
+      border: none;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      margin: 0 auto;
+      display: block;
+    }
+  </style>
 </head>
 <body>
-    <h1>Google Sheets Verileri</h1>
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTPRmyuwsnk6wZhVb-_2Zqks6bjUENCMrYW8ViQVY9putpT_YCtuBrUScQ9V9KBvFLxQYVh0KmzB73v/pubhtml" allowfullscreen></iframe>
+  <h1>Google Sheets Sekmeli Görünüm</h1>
+  
+  <!-- Sekme navigasyonu -->
+  <div class="tabs">
+    <div class="tab active" data-target="iframe1">Sayfa 1</div>
+    <div class="tab" data-target="iframe2">Sayfa 2</div>
+    <!-- İhtiyacınıza göre ek sekme ekleyebilirsiniz -->
+  </div>
+  
+  <!-- Her sekme için ayrı iframe kapsayıcısı -->
+  <div id="iframe1" class="iframe-container active">
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTPRmyuwsnk6wZhVb-_2Zqks6bjUENCMrYW8ViQVY9putpT_YCtuBrUScQ9V9KBvFLxQYVh0KmzB73v/pubhtml?widget=true" allowfullscreen></iframe>
+  </div>
+  
+  <div id="iframe2" class="iframe-container">
+    <!-- Aşağıdaki URL'yi geçerli bir Google Sheets linkiyle değiştirin -->
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTPRmyuwsnk6wZhVb-_2Zqks6bjUENCMrYW8ViQVY9putpT_YCtuBrUScQ9V9KBvFLxQYVh0KmzB73v/pubhtml?widget=true" allowfullscreen></iframe>
+  </div>
+  
+  <script>
+    // Tüm sekmeleri ve iframe kapsayıcılarını seç
+    const tabs = document.querySelectorAll('.tab');
+    const containers = document.querySelectorAll('.iframe-container');
+    
+    // Her sekmeye tıklama olayını ekle
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Tüm sekmelerden aktif sınıfını kaldır
+        tabs.forEach(t => t.classList.remove('active'));
+        // Tüm iframe kapsayıcılarını gizle
+        containers.forEach(c => c.classList.remove('active'));
+        
+        // Tıklanan sekmeye aktif sınıfı ekle
+        tab.classList.add('active');
+        // İlgili iframe kapsayıcısını göster
+        const target = tab.getAttribute('data-target');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
